@@ -31,7 +31,11 @@ for (let i = 0; i < argv.length; i += 1) {
   if (arg === '--out' || arg === '-o') outDir = argv[(i += 1)] ?? outDir
   else if (arg.startsWith('--out=')) outDir = arg.slice(6)
   else if (arg === '--upload' || arg === '-u') upload = true
-  else if (arg === '--help' || arg === '-h') { console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 12).join('\n')); process.exit(0) }
+  else if (arg === '--help' || arg === '-h') {
+    const lines = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n')
+    console.log(lines.slice(1, lines.findIndex((line, index) => index > 0 && !line.startsWith('//'))).join('\n'))
+    process.exit(0)
+  }
   else for (const part of arg.split(',')) if (part.trim() !== '') wanted.push(part.trim())
 }
 
