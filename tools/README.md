@@ -1,8 +1,8 @@
-# 维护备份的工具（四个脚本，零依赖）
+# 维护备份的工具（五个脚本，零依赖）
 
 给**维护者自己**用的：插件新增、升级、卸载之后，把 `dsh-vendor` 的 Release 补上。只想装插件的话用不到这里。
 
-## 四个脚本
+## 五个脚本
 
 | 脚本 | 干什么 | 什么时候跑 |
 | --- | --- | --- |
@@ -10,6 +10,7 @@
 | `pack-vendor.mjs` | 读 profile 的 `package.json`，把**每个**已装插件打包到 `tools/vendor/` | 批量/整份刷新 |
 | `upload-vendor.mjs` | 把 `tools/vendor/*.tgz` 传进 Release（同名跳过） | `pack-vendor` 之后 |
 | `restore.mjs` | 反过来：检查 profile 缺哪个包、用 `vendor/*.tgz` 补装 | 换机器/装坏了 |
+| `snapshot.mjs` | 把整个 `node_modules` 打成一个 tgz（134 MB 左右），加 `--upload` 直接传 Release | 想整份照搬、或怕作者删包 |
 
 ## 最常用：只备份一个新装的插件
 
@@ -44,17 +45,32 @@ node tools/restore.mjs plan          # 看 profile 缺什么
 
 `pack-vendor` / `pack-one` 都会跳过内置的 `@deepseek-ai/*`（那些是 DSH 自带的，不用备份）。
 
-## 发布自建插件（发到它自己的仓库）
+## 整棵 node_modules 快照（`snapshot.mjs`）
 
-一个插件一个仓库，所以自建插件的**正式发布**应该进它自己的 Release，而不是这个汇总仓库：
+前面四个脚本都是「一包一个 tgz」；**快照**是另一种兜底：把整个 `node_modules` 打成一个 tgz，
+换机器时解包就得到一模一样的插件集合（不用跑 `pnpm install`，也不怕哪个作者删了包）。
 
 ```powershell
-$env:DSH_VENDOR_REPO = "dsh-pwbrowser-browsers"   # 目标仓库（默认 dsh-vendor）
-$env:DSH_VENDOR_TAG  = "v1.2.3"                   # 标签（默认 plugins-2026-11-20）
-node tools/pack-one.mjs @local/pwbrowser-browsers --upload
+# 打包到 桌面\dsh-backup\node-modules-snapshot-<今天日期>.tgz
+node tools/snapshot.mjs
+
+# 指定路径
+node tools/snapshot.mjs --out D:\\bak\\nm.tgz
+
+# 打完直接传 Release（要 token；tag 用 DSH_VENDOR_TAG，默认 plugins-2026-11-20）
+node tools/snapshot.mjs --upload
 ```
 
-打出来的包会挂成该 tag 的资产；同名资产自动跳过，重复跑安全。
+另一台机器恢复：
+
+```powershell
+tar -xzf node-modules-snapshot-2026-11-21.tgz -C "$env:USERPROFILE\.dsh\profiles\desktop"
+```
+
+- 体积参考：本机 `node_modules` 约 500 MB、2 万个文件 → 压缩后 134 MB，压缩 2～4 分钟。
+- 打包时写的是**相对路径**（`node_modules/...`），所以换机器解包即可，不需要改路径。
+- 快照不替代 tgz：tgz 是「按包挑着装」，快照是「整份照搬」，体量大、每次都 134 MB，按需更新即可。
+- 注意：`node_modules` 里若有已卸载插件的残留目录，也会被一起打进去（解包后 `restore.mjs plan` 能看出来）。
 
 ## 凭据
 
