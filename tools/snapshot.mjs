@@ -6,7 +6,7 @@
 //   node tools/snapshot.mjs --upload             打包后上传到 Release（需要 GH_TOKEN 或 .ghtok）
 //
 // 环境变量：DSH_HOME（默认 %USERPROFILE%\.dsh）、DSH_VENDOR_PROFILE（默认 desktop）、
-//           DSH_VENDOR_TAG（默认 plugins-2026-11-20）、DSH_VENDOR_REPO（默认 dsh-vendor）
+//           DSH_VENDOR_TAG（默认 plugins-2026-11-21）、DSH_VENDOR_REPO（默认 dsh-vendor）
 //
 // 这不是 pack-vendor.mjs：pack-vendor 是「一包一个 tgz」，这里是「整棵 node_modules 一个 tgz」。
 
@@ -21,7 +21,7 @@ const PROFILE_NAME = process.env.DSH_VENDOR_PROFILE ?? 'desktop'
 const PROFILE = join(DSH_HOME, 'profiles', PROFILE_NAME)
 const OWNER = process.env.DSH_VENDOR_OWNER ?? 'KINGs74'
 const REPO = process.env.DSH_VENDOR_REPO ?? 'dsh-vendor'
-const TAG = process.env.DSH_VENDOR_TAG ?? 'plugins-2026-11-20'
+const TAG = process.env.DSH_VENDOR_TAG ?? 'plugins-2026-11-21'
 
 const argv = process.argv.slice(2)
 let out
