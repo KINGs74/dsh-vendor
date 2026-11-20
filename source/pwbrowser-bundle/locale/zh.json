@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "浏览器控制（Chrome / Edge / Brave）",
+    "description": "通过 Playwright 浏览器扩展桥接，让智能体直接操作你已登录的 Chrome、Edge 和 Brave 窗口；输入框带一个「浏览器」开关（命令行 /browser）。",
+    "detail": "docs/DETAIL.md"
+  }
+}
