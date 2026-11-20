@@ -31,9 +31,25 @@
 
 ## 怎么用
 
+### 最快：在 DSH 界面里点（不用敲命令）
+
+**Plugins** 页 → 右上 **添加插件** → 在**「包名或地址」**框里粘贴下面任一种 → 安装：
+
+| 粘贴什么 | 例子 |
+| --- | --- |
+| 本页 Release 的**文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-20/local-pwbrowser-browsers-1.2.2.tgz` |
+| 已经下到本机的**绝对路径** | `C:\Users\你\Downloads\dsh-windows-mcp-0.2.11.tgz` |
+
+「安装源」选**官方源**或**大陆镜像源**都行（只影响依赖从哪个 npm 源拉）。
+
+⚠️ 两个最常见的坑：
+
+1. **别把 tgz 地址填进「安装源」**——那是 npm registry，pnpm 会拼出 `…/xxx.tgz/包名` 这种地址，然后把 GitHub 的 404 HTML 页面当 JSON 解析，报 `ERR_PNPM_BROKEN_METADATA_JSON`（这正是这么踩出来的）。
+2. 要贴 **文件直链** `…/releases/download/<tag>/<文件名>`，不是**页面地址** `…/releases/tag/<tag>`。
+
 ### 只装其中一个
 
-把 tgz 下到本机，在插件页「添加插件」里粘贴**绝对路径**，或命令行：
+命令行等价写法（合适写脚本/批量）：
 
 ```
 plugin_manager action=install_bundle target=C:\\Users\\你\\Downloads\\dsh-windows-mcp-0.2.11.tgz
@@ -46,11 +62,15 @@ plugin_manager action=install_bundle target=C:\\Users\\你\\Downloads\\dsh-windo
 
 ### 全新机器整份恢复
 
+把 `node-modules-snapshot-2026-11-20.tgz`（134 MB）下到本机，解到 profile：
+
 ```powershell
 tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles\desktop"
 ```
 
-然后重开 DSH，插件就都在了（约 43 秒解压）。配置、插件清单、版本锁这些在私有仓库 `dsh-profile` 里。
+然后重开 DSH，13 个插件就都在了（约 43 秒解压）。这一步**不需要** registry、不需要 `pnpm install`——连传递依赖都在包里。
+
+> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话，它没有依赖，单独装那一个 25 KB 的 tgz 就够，不需要快照、也不需要装其他 12 个。
 
 ## 说明
 
