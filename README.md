@@ -6,10 +6,11 @@
 
 ## 下载
 
-- 网页：<https://github.com/KINGs74/dsh-vendor/releases/tag/plugins-2026-11-20>
-- 直链（无需登录）：`https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-20/<文件名>`
+- 网页：<https://github.com/KINGs74/dsh-vendor/releases>　当前最新一版是 **插件离线包 2026-11-21**（标签 plugins-2026-11-21）
+- 直链（无需登录）：以 `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-21/<文件名>` 为准
+- 旧版仍然在：把链接里的 plugins-2026-11-21 换成 plugins-2026-11-20 即可（文件名相同）
 
-## 里面有什么（13 个插件包）
+## 里面有什么（14 个插件包）
 
 | 文件 | 版本 | 作用 | 大小 |
 | --- | --- | --- | --- |
@@ -19,6 +20,7 @@
 | `dsh-mcp-connector-0.2.109.tgz` | 0.2.109 | MCP 连接器市场 | 2.3 MB |
 | `dshmarket-1.73.19.tgz` | 1.73.19 | 插件市场 | 0.86 MB |
 | `linxin666-dsh-ssh-0.4.18.tgz` | 0.4.18 | SSH 主机与隧道 | 0.58 MB |
+| `dsh-prompt-rewriter-1.8.4.tgz` | 1.8.4 | 输入框旁一键改写提示词（就地改草稿，不发送） | 0.56 MB |
 | `dsh-codex-effort-slider-1.1.5.tgz` | 1.1.5 | Codex 风格 effort 滑杆 | 0.53 MB |
 | `dsh-context-0.84.1.tgz` | 0.84.1 | 上下文检索 | 0.39 MB |
 | `dsh-sidebar-fold-0.1.6.tgz` | 0.1.6 | 侧边栏折叠 | 0.23 MB |
@@ -27,7 +29,7 @@
 | `dsh-windows-mcp-0.2.11.tgz` | 0.2.11 | Windows 桌面控制（MCP） | 0.10 MB |
 | `local-pwbrowser-browsers-1.2.2.tgz` | 1.2.2 | 浏览器控制（自建：composer 开关 + 插件页 token） | 25 KB |
 
-另外还有一个**整份 `node_modules` 快照** `node-modules-snapshot-2026-11-20.tgz`（134 MB，171 个包），给"全新机器一把恢复"用。
+另外还有一个**整份 `node_modules` 快照** `node-modules-snapshot-2026-11-21.tgz`（134.7 MB，172 个包），给"全新机器一把恢复"用。每一版 Release 各带一个当日快照，用最新的那个就行。
 
 ## 怎么用
 
@@ -40,7 +42,7 @@
 | 你要装的是 | 框里填 | 例子 |
 | --- | --- | --- |
 | npm 上发布的插件 | **包名**（可带版本） | `dsh-windows-mcp@0.2.11` |
-| 本页 Release 里的 tgz | **文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-20/dsh-ops-0.5.5.tgz` |
+| 本页 Release 里的 tgz | **文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-21/dsh-ops-0.5.5.tgz` |
 | 已下到本机的 tgz | **绝对路径** | `C:\Users\你\Downloads\dsh-ops-0.5.5.tgz` |
 | 源码目录 | **目录绝对路径** | `C:\dsh-bundles\pwbrowser-bundle` |
 
@@ -75,10 +77,10 @@ plugin_manager action=install_bundle target=C:\\Users\\你\\Downloads\\dsh-windo
 
 ### 全新机器整份恢复
 
-把 `node-modules-snapshot-2026-11-20.tgz`（134 MB）下到本机，解到 profile：
+把 `node-modules-snapshot-2026-11-21.tgz`（134.7 MB）下到本机，解到 profile：
 
 ```powershell
-tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles\desktop"
+tar -xzf node-modules-snapshot-2026-11-21.tgz -C "$env:USERPROFILE\.dsh\profiles\desktop"
 ```
 
 然后重开 DSH，13 个插件就都在了（约 43 秒解压）。这一步**不需要** registry、不需要 `pnpm install`——连传递依赖都在包里。
@@ -110,6 +112,22 @@ node tools/restore.mjs plan    # 检查 profile 缺哪个包
 ```
 
 细节与坑（npm cache 报 EPERM、几十兆的大包回落 registry、`--ignore-scripts` 必须加）见 [`tools/README.md`](tools/README.md)。
+
+**情况三：插件变了，顺手更新「整份快照」**
+
+快照不是插件包，是**把整个 `node_modules` 打成一个 tgz**（约 500 MB → 134 MB，压缩 2～4 分钟），
+给"全新机器一把恢复"用。前者按包装，后者整份照搬，两者不冲突。
+
+```bash
+node tools/snapshot.mjs             # → 桌面\dsh-backup\node-modules-snapshot-<今天日期>.tgz
+node tools/snapshot.mjs --upload    # 打完直接传进本仓库的 Release（同名跳过）
+node tools/snapshot.mjs --out D:\bak\nm.tgz   # 想放到别处
+```
+
+- 体积会随插件增多而变大（11-20 是 134.2 MB / 171 包，11-21 是 134.7 MB / 172 包）。
+- 打包时写的是**相对路径**（`node_modules/...`），所以换机器解包即用，不用改任何路径。
+- 135 MB 的东西**别在网页上拖**（容易断），用 `--upload` 或命令行传更稳。
+- 快照里若混进已卸载插件的残留目录，解包后用 `node tools/restore.mjs plan` 能看出来。
 
 
 ## 说明
