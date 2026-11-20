@@ -20,7 +20,7 @@ const PROFILE_NAME = process.env.DSH_VENDOR_PROFILE ?? 'desktop'
 const PROFILE = join(DSH_HOME, 'profiles', PROFILE_NAME)
 const OWNER = process.env.DSH_VENDOR_OWNER ?? 'KINGs74'
 const REPO = process.env.DSH_VENDOR_REPO ?? 'dsh-vendor'
-const TAG = process.env.DSH_VENDOR_TAG ?? 'plugins-2026-11-20'
+const TAG = process.env.DSH_VENDOR_TAG ?? 'plugins-2026-11-21'
 
 const argv = process.argv.slice(2)
 const wanted = []
