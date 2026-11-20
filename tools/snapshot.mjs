@@ -63,8 +63,12 @@ console.log('  （约 500 MB / 2 万个文件，慢的话几分钟，别关窗�
 
 const tar = spawnSync('tar', ['-czf', target, '-C', PROFILE, 'node_modules'], { encoding: 'utf8' })
 if (tar.error !== undefined) {
-  console.error(`  ✖ 调不起 tar：${tar.error.message}`)
-  console.error('    Windows 10 1803+ 自带 tar.exe；没有的话用 WSL/Git Bash 执行同样的命令\n')
+  const code = tar.error.code === 'EPERM'
+    ? '被当前环境拦住了（沙箱/权限策略不允许脚本起子进程）'
+    : tar.error.message
+  console.error(`  ✖ 调不起 tar：${code}`)
+  console.error('\n    在 PowerShell 里手动跑同样的命令即可：\n')
+  console.error(`      tar -czf "${target}" -C "${PROFILE}" node_modules\n`)
   process.exit(1)
 }
 if (tar.status !== 0) {
