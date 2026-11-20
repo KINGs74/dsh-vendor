@@ -33,23 +33,36 @@
 
 ### 最快：在 DSH 界面里点（不用敲命令）
 
-**Plugins** 页 → 右上 **添加插件** → 在**「包名或地址」**框里粘贴下面任一种 → 安装：
+**第 1 步**　左侧栏「插件」→ 右上角「**添加插件**」。
 
-| 粘贴什么 | 例子 |
-| --- | --- |
-| 本页 Release 的**文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-20/local-pwbrowser-browsers-1.2.2.tgz` |
-| 已经下到本机的**绝对路径** | `C:\Users\你\Downloads\dsh-windows-mcp-0.2.11.tgz` |
+**第 2 步**　在**「包名或地址」**框里填要装的东西：
 
-「安装源」选**官方源**或**大陆镜像源**都行（只影响依赖从哪个 npm 源拉）。
+| 你要装的是 | 框里填 | 例子 |
+| --- | --- | --- |
+| npm 上发布的插件 | **包名**（可带版本） | `dsh-windows-mcp@0.2.11` |
+| 本页 Release 里的 tgz | **文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-20/dsh-ops-0.5.5.tgz` |
+| 已下到本机的 tgz | **绝对路径** | `C:\Users\你\Downloads\dsh-ops-0.5.5.tgz` |
+| 源码目录 | **目录绝对路径** | `C:\dsh-bundles\pwbrowser-bundle` |
 
-⚠️ 两个最常见的坑：
+**第 3 步**　「安装源」怎么选：
 
-1. **别把 tgz 地址填进「安装源」**——那是 npm registry，pnpm 会拼出 `…/xxx.tgz/包名` 这种地址，然后把 GitHub 的 404 HTML 页面当 JSON 解析，报 `ERR_PNPM_BROKEN_METADATA_JSON`（这正是这么踩出来的）。
-2. 要贴 **文件直链** `…/releases/download/<tag>/<文件名>`，不是**页面地址** `…/releases/tag/<tag>`。
+| 你的情况 | 选这个 | 为什么 |
+| --- | --- | --- |
+| 装**包名**，网络正常 | **npm 官方源**（默认） | 最全、最新 |
+| 装**包名**，国内慢/超时 | **中国大陆镜像源** | npmmirror 同步，通常几 MB/s |
+| 装 **tgz / 直链 / 本地目录** | **中国大陆镜像源**（或官方源，都行） | tgz 本体不经过源；但它的**依赖**要从源里拉 |
+| 有公司内网私有 registry | **自定义地址** | 只在真填了内网源时用。⚠️ 别把 tgz 地址塞这里 |
 
-### 只装其中一个
+> ⚠️ 两个最常见的错：
+>
+> 1. tgz 地址填进**「安装源」** → 那是 npm registry，pnpm 会拼出 `…/xxx.tgz/包名`，把 GitHub 的 404 HTML 当 JSON 解析，报 `ERR_PNPM_BROKEN_METADATA_JSON`。
+> 2. 粘 Release **页面地址** `…/releases/tag/<tag>` 而不是**文件直链** `…/releases/download/<tag>/<文件名>`。
 
-命令行等价写法（合适写脚本/批量）：
+**第 4 步**　点「**安装**」，等状态变成已启用（快捷键：插件页立刻能看到新组件，一般不用重启）。
+
+### 只装其中一个（命令行等价写法）
+
+下面的 `install_bundle` 对应界面的第 2、3 步（`registry` 参数就是「安装源」）：
 
 ```
 plugin_manager action=install_bundle target=C:\\Users\\你\\Downloads\\dsh-windows-mcp-0.2.11.tgz
@@ -70,7 +83,7 @@ tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles
 
 然后重开 DSH，13 个插件就都在了（约 43 秒解压）。这一步**不需要** registry、不需要 `pnpm install`——连传递依赖都在包里。
 
-> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话，它没有依赖，单独装那一个 25 KB 的 tgz 就够，不需要快照、也不需要装其他 12 个。
+> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 25 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
 
 ## 说明
 
