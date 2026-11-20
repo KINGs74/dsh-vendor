@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "title": "Browser control (Chrome / Edge / Brave)",
-    "description": "Connects Playwright's browser extension bridge so the agent can drive your logged-in Chrome, Edge and Brave windows, plus a composer browser switch (or /browser).",
-    "detail": "docs/DETAIL.md"
-  }
-}
