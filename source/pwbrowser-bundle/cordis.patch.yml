@@ -1,0 +1,69 @@
+# Three browser connections driven by @playwright/mcp in extension mode.
+#
+# The version is pinned on purpose: the Playwright Extension checks the client's
+# protocol version, and a surprise upgrade under @latest can make an already
+# approved client ask for Allow again (or refuse with "update Playwright MCP").
+# Bump all three rows together when you upgrade the extension.
+#
+# Each entry is an independent MCP server, so every browser gets its own
+# tool prefix:
+#   mcp__pwbrowser__google__*   Chrome
+#   mcp__pwbrowser__edge__*     Microsoft Edge
+#   mcp__pwbrowser__brave__*    Brave
+#
+# failOnStartupError stays false: a machine that does not have one of the
+# three browsers installed must still boot with the other two working.
+#
+# The last entry is this package itself. It carries no MCP configuration: its
+# job is to be a row on the host's plugin tree so the web client loads
+# `client.js` (the composer's browser-mode chip) and so the host registers the
+# `/browser` command that the chip drives.
+- insert:
+    - id: pwbrowser-browser-mode
+      name: '@local/pwbrowser-browsers'
+
+    - id: mcp-pwbrowser-google
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: pwbrowser__google
+        transport: stdio
+        command: npx
+        args:
+          - '-y'
+          - '@playwright/mcp@0.0.86'
+          - '--extension'
+        startupTimeoutMs: 60000
+        failOnStartupError: false
+
+    - id: mcp-pwbrowser-edge
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: pwbrowser__edge
+        transport: stdio
+        command: npx
+        args:
+          - '-y'
+          - '@playwright/mcp@0.0.86'
+          - '--extension'
+          - '--browser=msedge'
+        startupTimeoutMs: 60000
+        failOnStartupError: false
+
+    # Brave is not a Playwright channel. --executable-path is passed straight
+    # to the child process, which only needs a Chromium binary that has the
+    # Playwright extension installed. Adjust the path if Brave lives elsewhere
+    # (e.g. C:\Program Files (x86)\... or %LOCALAPPDATA%\BraveSoftware\...).
+    - id: mcp-pwbrowser-brave
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: pwbrowser__brave
+        transport: stdio
+        command: npx
+        args:
+          - '-y'
+          - '@playwright/mcp@0.0.86'
+          - '--extension'
+          - '--executable-path'
+          - 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe'
+        startupTimeoutMs: 60000
+        failOnStartupError: false
