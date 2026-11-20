@@ -115,5 +115,5 @@ node tools/restore.mjs plan    # 检查 profile 缺哪个包
 ## 说明
 
 - 这些是第三方作者发布的原始 npm 产物，版权归各自作者，本仓库只做离线镜像，方便重装。
-- **源码不在这个仓库**：自己写的插件源码在 [`dsh-plugins`](https://github.com/KINGs74/dsh-plugins)，这里只放打包好的 tgz 和打包工具。
+- **源码不在这个仓库**：自己写的插件源码在各自的仓库里，一个插件一个仓库 —— 目前是 [`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers)。这里只放打包好的 tgz 和打包工具。
 - **配置不在备份范围**：模型、主题、MCP、浏览器开关这些本机设置，换机器重新设一遍即可；本仓库只保证「插件包装得回来」。
