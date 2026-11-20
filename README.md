@@ -85,6 +85,14 @@ tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles
 
 > 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 25 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
 
+## 自己写的插件：源码也在这里
+
+[`source/pwbrowser-bundle/`](source/pwbrowser-bundle/) 是自建插件 `@local/pwbrowser-browsers`（「浏览器」开关 + Chrome/Edge/Brave 三个 MCP 服务器）的完整源码，10 个文件。
+
+- 想**继续改**：`git clone` 本仓库，把 `source/pwbrowser-bundle/` 拷到任意目录，再用「添加插件」填该目录的**绝对路径**（源码目录装法，改完代码热重载、立即生效）。
+- 想**直接用**：装 Release 里的 `local-pwbrowser-browsers-1.2.2.tgz`（快照，装的是副本，改代码不生效）。
+- 两者是同一个东西：tgz 就是从该目录 `npm pack` 出来的。
+
 ## 维护者：插件新增/升级后，怎么补进这里的包
 
 脚本零依赖，在 [`tools/`](tools/) 里。**只换参数，不用改代码。**
