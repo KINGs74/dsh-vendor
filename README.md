@@ -85,17 +85,32 @@ tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles
 
 > 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 25 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
 
-## 插件升级了，怎么刷新这里的包
+## 维护者：插件新增/升级后，怎么补进这里的包
 
-维护者自己用：三个零依赖脚本在 [`tools/`](tools/) 里。
+脚本零依赖，在 [`tools/`](tools/) 里。**只换参数，不用改代码。**
+
+**情况一：某台机器上新装了一个插件，只想把那一个补进备份**（最常见）
+
+```bash
+node tools/pack-one.mjs                   # 先看这台机器装了哪些（带编号，不给参数就只列清单）
+node tools/pack-one.mjs dsh-ops           # 打这一个 → 桌面\dsh-backup\dsh-ops-0.5.5.tgz
+node tools/pack-one.mjs dsh-ops --upload  # 打完直接传进 Release（要 GH_TOKEN 或 tools/.ghtok）
+```
+
+不想配 token 就跳过 `--upload`，把生成的 tgz 拖到 Release 页面的 **“Attach binaries by dropping them here or selecting them”** 框里，效果一样。
+
+包名记不清也能写一部分：`pack-one.mjs quote` 会自动匹配到 `dsh-quote-followup`；匹配不唯一时会让你写全名。
+
+**情况二：插件升级了，整份刷新**
 
 ```bash
 node tools/pack-vendor.mjs     # 按 profile 的 package.json 重新打包到 vendor/
-node tools/upload-vendor.mjs   # 传进本仓库的 Release（同名跳过；token 放 tools/.ghtok 或设 GH_TOKEN）
+node tools/upload-vendor.mjs   # 传进本仓库的 Release（同名跳过，可反复跑）
 node tools/restore.mjs plan    # 检查 profile 缺哪个包
 ```
 
-细节与坑见 [`tools/README.md`](tools/README.md)。
+细节与坑（npm cache 报 EPERM、几十兆的大包回落 registry、`--ignore-scripts` 必须加）见 [`tools/README.md`](tools/README.md)。
+
 
 ## 说明
 
