@@ -24,6 +24,7 @@ const TAG = process.env.DSH_VENDOR_TAG ?? 'plugins-2026-11-20'
 
 const argv = process.argv.slice(2)
 const wanted = []
+const askedVersion = new Map()
 let outDir = join(process.env.USERPROFILE ?? homedir(), 'Desktop', 'dsh-backup')
 let upload = false
 for (let i = 0; i < argv.length; i += 1) {
@@ -36,7 +37,15 @@ for (let i = 0; i < argv.length; i += 1) {
     console.log(lines.slice(1, lines.findIndex((line, index) => index > 0 && !line.startsWith('//'))).join('\n'))
     process.exit(0)
   }
-  else for (const part of arg.split(',')) if (part.trim() !== '') wanted.push(part.trim())
+  else for (const part of arg.split(',')) {
+    const token = part.trim()
+    if (token === '') continue
+    // 允许「名字@版本」写法：版本只用来提示，实际打的是这台机器装着的那个版本
+    const bare = token.replace(/@[^/@]*$/, '')
+    const asked = token.slice(bare.length).replace(/^@/, '')
+    if (asked !== '') askedVersion.set(bare, asked)
+    wanted.push(bare)
+  }
 }
 
 if (!existsSync(join(PROFILE, 'package.json'))) {
@@ -76,7 +85,14 @@ if (wanted.length === 0) {
 // 名字对不上时给出候选
 const chosen = []
 for (const query of wanted) {
-  if (installed.has(query)) { chosen.push([query, installed.get(query)]); continue }
+  if (installed.has(query)) {
+    const info = installed.get(query)
+    const asked = askedVersion.get(query)
+    if (asked !== undefined && asked !== info.version) {
+      console.log(`  ! 你写的是 ${query}@${asked}，这台机器装的是 ${info.version} —— 按已装的 ${info.version} 打包`)
+    }
+    chosen.push([query, info]); continue
+  }
   const hits = sorted.filter(([name]) => name.toLowerCase().includes(query.toLowerCase()))
   if (hits.length === 0) {
     console.error(`\n  ✖ 这台机器没有「${query}」。已装的：${sorted.map(([name]) => name).join(', ')}\n`)
