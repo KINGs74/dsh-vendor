@@ -116,4 +116,5 @@ node tools/restore.mjs plan    # 检查 profile 缺哪个包
 
 - 这些是第三方作者发布的原始 npm 产物，版权归各自作者，本仓库只做离线镜像，方便重装。
 - **源码不在这个仓库**：自己写的插件源码在各自的仓库里，一个插件一个仓库 —— 目前是 [`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers)。这里只放打包好的 tgz 和打包工具。
+- **自建插件的正式发布在它自己的仓库**：[`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers) 的 [Release v1.2.2](https://github.com/KINGs74/dsh-pwbrowser-browsers/releases/tag/v1.2.2) 才是正式包；本仓库里那个同名的 `local-pwbrowser-browsers-1.2.2.tgz` 只是**汇总镜像**（方便一次把 13 个全下），两边内容一致。
 - **配置不在备份范围**：模型、主题、MCP、浏览器开关这些本机设置，换机器重新设一遍即可；本仓库只保证「插件包装得回来」。
