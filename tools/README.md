@@ -44,6 +44,18 @@ node tools/restore.mjs plan          # 看 profile 缺什么
 
 `pack-vendor` / `pack-one` 都会跳过内置的 `@deepseek-ai/*`（那些是 DSH 自带的，不用备份）。
 
+## 发布自建插件（发到它自己的仓库）
+
+一个插件一个仓库，所以自建插件的**正式发布**应该进它自己的 Release，而不是这个汇总仓库：
+
+```powershell
+$env:DSH_VENDOR_REPO = "dsh-pwbrowser-browsers"   # 目标仓库（默认 dsh-vendor）
+$env:DSH_VENDOR_TAG  = "v1.2.3"                   # 标签（默认 plugins-2026-11-20）
+node tools/pack-one.mjs @local/pwbrowser-browsers --upload
+```
+
+打出来的包会挂成该 tag 的资产；同名资产自动跳过，重复跑安全。
+
 ## 凭据
 
 上传要一个能写 `repo` 的 GitHub PAT，二选一：
