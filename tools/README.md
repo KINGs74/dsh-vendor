@@ -31,7 +31,7 @@ node tools/pack-one.mjs dsh-ops --upload
 - 输出目录换成别的：`--out D:\bak`
 - 一次打多个：`node tools/pack-one.mjs dsh-ops dshmarket`
 - 名字对不上时，脚本会把这台机器已装的包名全列出来
-- 不配 token 也能用：跳过 `--upload`，把 tgz 拖到 <https://github.com/KINGs74/dsh-vendor/releases/tag/plugins-2026-11-20> 的 “Attach binaries by dropping them here or selecting them” 框里
+- 不配 token 也能用：跳过 `--upload`，把 tgz 拖到 <https://github.com/KINGs74/dsh-vendor/releases/tag/plugins-2026-11-21> 的 “Attach binaries by dropping them here or selecting them” 框里
 
 ## 整份刷新（批量）
 
@@ -57,7 +57,7 @@ node tools/snapshot.mjs
 # 指定路径
 node tools/snapshot.mjs --out D:\\bak\\nm.tgz
 
-# 打完直接传 Release（要 token；tag 用 DSH_VENDOR_TAG，默认 plugins-2026-11-20）
+# 打完直接传 Release（要 token；tag 用 DSH_VENDOR_TAG，默认 plugins-2026-11-21）
 node tools/snapshot.mjs --upload
 ```
 
@@ -88,7 +88,7 @@ tar -xzf node-modules-snapshot-2026-11-21.tgz -C "$env:USERPROFILE\.dsh\profiles
 | `DSH_VENDOR_OWNER` | `KINGs74` | 仓库 owner |
 | `DSH_VENDOR_REPO` | `dsh-vendor` | 仓库名 |
 | `DSH_VENDOR_NPM_CACHE` | `tools/.npm-cache` | `npm pack` 的缓存目录（默认 npm 缓存常常没权限） |
-| `DSH_VENDOR_TAG` | `plugins-2026-11-20` | Release 标签 |
+| `DSH_VENDOR_TAG` | `plugins-2026-11-21` | Release 标签 |
 
 ## 出问题看这里
 
