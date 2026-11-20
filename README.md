@@ -85,6 +85,18 @@ tar -xzf node-modules-snapshot-2026-11-20.tgz -C "$env:USERPROFILE\.dsh\profiles
 
 > 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 25 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
 
+## 插件升级了，怎么刷新这里的包
+
+维护者自己用：三个零依赖脚本在 [`tools/`](tools/) 里。
+
+```bash
+node tools/pack-vendor.mjs     # 按 profile 的 package.json 重新打包到 vendor/
+node tools/upload-vendor.mjs   # 传进本仓库的 Release（同名跳过；token 放 tools/.ghtok 或设 GH_TOKEN）
+node tools/restore.mjs plan    # 检查 profile 缺哪个包
+```
+
+细节与坑见 [`tools/README.md`](tools/README.md)。
+
 ## 说明
 
 - 这些是第三方作者发布的原始 npm 产物，版权归各自作者，本仓库只做离线镜像，方便重装。
