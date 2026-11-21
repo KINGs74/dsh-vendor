@@ -27,7 +27,7 @@
 | `dsh-quote-followup-0.2.10.tgz` | 0.2.10 | 引用追问 | 0.12 MB |
 | `dsh-auto-memory-1.7.0.tgz` | 1.7.0 | 自动记忆 | 0.10 MB |
 | `dsh-windows-mcp-0.2.11.tgz` | 0.2.11 | Windows 桌面控制（MCP） | 0.10 MB |
-| `local-pwbrowser-browsers-1.2.2.tgz` | 1.2.2 | 浏览器控制（自建：composer 开关 + 插件页 token） | 25 KB |
+| `local-pwbrowser-browsers-1.3.0.tgz` | 1.3.0 | 浏览器控制（自建：composer 圆点开关 + 插件页 token） | 30 KB |
 
 另外还有一个**整份 `node_modules` 快照** `node-modules-snapshot-2026-11-21.tgz`（134.7 MB，172 个包），给"全新机器一把恢复"用。每一版 Release 各带一个当日快照，用最新的那个就行。
 
@@ -85,7 +85,7 @@ tar -xzf node-modules-snapshot-2026-11-21.tgz -C "$env:USERPROFILE\.dsh\profiles
 
 然后重开 DSH，13 个插件就都在了（约 43 秒解压）。这一步**不需要** registry、不需要 `pnpm install`——连传递依赖都在包里。
 
-> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 25 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
+> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 30 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
 
 ## 维护者：插件新增/升级后，怎么补进这里的包
 
@@ -134,5 +134,5 @@ node tools/snapshot.mjs --out D:\bak\nm.tgz   # 想放到别处
 
 - 这些是第三方作者发布的原始 npm 产物，版权归各自作者，本仓库只做离线镜像，方便重装。
 - **源码不在这个仓库**：自己写的插件源码在各自的仓库里，一个插件一个仓库 —— 目前是 [`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers)。这里只放打包好的 tgz 和打包工具。
-- **自建插件的正式发布在它自己的仓库**：[`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers) 的 [Release v1.2.2](https://github.com/KINGs74/dsh-pwbrowser-browsers/releases/tag/v1.2.2) 才是正式包；本仓库里那个同名的 `local-pwbrowser-browsers-1.2.2.tgz` 只是**汇总镜像**（方便一次把 13 个全下），两边内容一致。
+- **自建插件的正式发布在它自己的仓库**：[`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers) 的 [Release v1.3.0](https://github.com/KINGs74/dsh-pwbrowser-browsers/releases/tag/v1.3.0) 才是正式包；本仓库里那个同名的 `local-pwbrowser-browsers-1.3.0.tgz` 只是**汇总镜像**（方便一次把第三方那几个全下），两边内容一致。
 - **配置不在备份范围**：模型、主题、MCP、浏览器开关这些本机设置，换机器重新设一遍即可；本仓库只保证「插件包装得回来」。
