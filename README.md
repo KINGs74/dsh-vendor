@@ -1,35 +1,28 @@
 # DeepSeek Harness 插件离线包（公开镜像）
 
-这个仓库**只放插件包本体**，方便任何一台机器直接下载。用途很单纯：**防止原作者删库/下架后装不回来**。不含配置、不含密钥、不含主机清单——那些不需要备份，装回去重新设一遍就行。
+备份 DSH desktop profile 已安装的插件包，用于换机重装。每个插件单独提供 TGZ。
 
-为什么要单独开公开仓库：私有仓库的 Release 资源下载链接需要登录 GitHub，换台机器第一件事就是登不上；这里的东西全是 npm 上公开的第三方产物，没有泄露面。
+[插件离线包 2026-11-27](https://github.com/KINGs74/dsh-vendor/releases/tag/plugins-2026-11-27) · [历史发布](https://github.com/KINGs74/dsh-vendor/releases)
 
-## 下载
+## 插件清单（15 个）
 
-- 网页：<https://github.com/KINGs74/dsh-vendor/releases>　当前最新一版是 **插件离线包 2026-11-21**（标签 plugins-2026-11-21）
-- 直链（无需登录）：以 `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-21/<文件名>` 为准
-- 旧版仍然在：把链接里的 plugins-2026-11-21 换成 plugins-2026-11-20 即可（文件名相同）
-
-## 里面有什么（14 个插件包）
-
-| 文件 | 版本 | 作用 | 大小 |
-| --- | --- | --- | --- |
-| `dsh-ops-0.5.5.tgz` | 0.5.5 | 操作台：Bash/文件/PowerShell 工具与行配置 | 67.7 MB |
-| `billion-context-0.1.216.tgz` | 0.1.216 | 上下文压缩（长会话不炸） | 11.0 MB |
-| `dsh-better-sidebar-0.32.1.tgz` | 0.32.1 | 侧边栏增强 | 5.4 MB |
-| `dsh-mcp-connector-0.2.109.tgz` | 0.2.109 | MCP 连接器市场 | 2.3 MB |
-| `dshmarket-1.73.19.tgz` | 1.73.19 | 插件市场 | 0.86 MB |
-| `linxin666-dsh-ssh-0.4.18.tgz` | 0.4.18 | SSH 主机与隧道 | 0.58 MB |
-| `dsh-prompt-rewriter-1.8.4.tgz` | 1.8.4 | 输入框旁一键改写提示词（就地改草稿，不发送） | 0.56 MB |
-| `dsh-codex-effort-slider-1.1.5.tgz` | 1.1.5 | Codex 风格 effort 滑杆 | 0.53 MB |
-| `dsh-context-0.84.1.tgz` | 0.84.1 | 上下文检索 | 0.39 MB |
-| `dsh-sidebar-fold-0.1.6.tgz` | 0.1.6 | 侧边栏折叠 | 0.23 MB |
-| `dsh-quote-followup-0.2.10.tgz` | 0.2.10 | 引用追问 | 0.12 MB |
-| `dsh-auto-memory-1.7.0.tgz` | 1.7.0 | 自动记忆 | 0.10 MB |
-| `dsh-windows-mcp-0.2.11.tgz` | 0.2.11 | Windows 桌面控制（MCP） | 0.10 MB |
-| `local-pwbrowser-browsers-1.3.0.tgz` | 1.3.0 | 浏览器控制（自建：composer 圆点开关 + 插件页 token） | 30 KB |
-
-另外还有一个**整份 `node_modules` 快照** `node-modules-snapshot-2026-11-21.tgz`（134.7 MB，172 个包），给"全新机器一把恢复"用。每一版 Release 各带一个当日快照，用最新的那个就行。
+| 插件包 | 版本 |
+| --- | --- |
+| billion-context-0.1.216.tgz | 0.1.216 |
+| dsh-auto-memory-1.10.0.tgz | 1.10.0 |
+| dsh-better-sidebar-0.32.1.tgz | 0.32.1 |
+| dsh-codex-effort-slider-1.1.5.tgz | 1.1.5 |
+| dsh-context-0.84.1.tgz | 0.84.1 |
+| dsh-mcp-connector-0.2.109.tgz | 0.2.109 |
+| dsh-ops-0.5.5.tgz | 0.5.5 |
+| dsh-pet-0.4.1.tgz | 0.4.1 |
+| dsh-prompt-rewriter-1.8.4.tgz | 1.8.4 |
+| dsh-quote-followup-0.2.10.tgz | 0.2.10 |
+| dsh-sidebar-fold-0.1.6.tgz | 0.1.6 |
+| dsh-windows-mcp-0.2.11.tgz | 0.2.11 |
+| dshmarket-1.73.19.tgz | 1.73.19 |
+| linxin666-dsh-ssh-0.4.18.tgz | 0.4.18 |
+| local-pwbrowser-browsers-1.3.1.tgz | 1.3.1 |
 
 ## 怎么用
 
@@ -42,7 +35,7 @@
 | 你要装的是 | 框里填 | 例子 |
 | --- | --- | --- |
 | npm 上发布的插件 | **包名**（可带版本） | `dsh-windows-mcp@0.2.11` |
-| 本页 Release 里的 tgz | **文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-21/dsh-ops-0.5.5.tgz` |
+| 本页 Release 里的 tgz | **文件直链**（匿名可下） | `https://github.com/KINGs74/dsh-vendor/releases/download/plugins-2026-11-27/dsh-ops-0.5.5.tgz` |
 | 已下到本机的 tgz | **绝对路径** | `C:\Users\你\Downloads\dsh-ops-0.5.5.tgz` |
 | 源码目录 | **目录绝对路径** | `C:\dsh-bundles\pwbrowser-bundle` |
 
@@ -75,17 +68,7 @@ plugin_manager action=install_bundle target=C:\\Users\\你\\Downloads\\dsh-windo
 - 这样装的依赖会记成 `file:C:/...` 绝对路径，换机 `pnpm install` 会失败。想保持可移植：先 `remove_bundle`，再 `install_bundle target=名字@版本`。
 - 它的**传递依赖**（react、ssh2 之类）仍要从 registry 下；完全断网时改用快照。
 
-### 全新机器整份恢复
-
-把 `node-modules-snapshot-2026-11-21.tgz`（134.7 MB）下到本机，解到 profile：
-
-```powershell
-tar -xzf node-modules-snapshot-2026-11-21.tgz -C "$env:USERPROFILE\.dsh\profiles\desktop"
-```
-
-然后重开 DSH，13 个插件就都在了（约 43 秒解压）。这一步**不需要** registry、不需要 `pnpm install`——连传递依赖都在包里。
-
-> 只想装**自建的浏览器插件**（`local-pwbrowser-browsers`）的话：它零依赖，单独装那一个 30 KB 的 tgz 就够，会带出 4 个组件（1 个「浏览器」开关 + Chrome/Edge/Brave 三个服务器），不需要快照、也不需要其他 12 个。装完再去每个浏览器装一次 Playwright 扩展、在插件页填 token。
+历史整目录快照仍可从 [2026-11-21 备份](https://github.com/KINGs74/dsh-vendor/releases/tag/plugins-2026-11-21) 获取，对应当时的插件版本。
 
 ## 维护者：插件新增/升级后，怎么补进这里的包
 
@@ -113,26 +96,6 @@ node tools/restore.mjs plan    # 检查 profile 缺哪个包
 
 细节与坑（npm cache 报 EPERM、几十兆的大包回落 registry、`--ignore-scripts` 必须加）见 [`tools/README.md`](tools/README.md)。
 
-**情况三：插件变了，顺手更新「整份快照」**
+## 包来源
 
-快照不是插件包，是**把整个 `node_modules` 打成一个 tgz**（约 500 MB → 134 MB，压缩 2～4 分钟），
-给"全新机器一把恢复"用。前者按包装，后者整份照搬，两者不冲突。
-
-```bash
-node tools/snapshot.mjs             # → 桌面\dsh-backup\node-modules-snapshot-<今天日期>.tgz
-node tools/snapshot.mjs --upload    # 打完直接传进本仓库的 Release（同名跳过）
-node tools/snapshot.mjs --out D:\bak\nm.tgz   # 想放到别处
-```
-
-- 体积会随插件增多而变大（11-20 是 134.2 MB / 171 包，11-21 是 134.7 MB / 172 包）。
-- 打包时写的是**相对路径**（`node_modules/...`），所以换机器解包即用，不用改任何路径。
-- 135 MB 的东西**别在网页上拖**（容易断），用 `--upload` 或命令行传更稳。
-- 快照里若混进已卸载插件的残留目录，解包后用 `node tools/restore.mjs plan` 能看出来。
-
-
-## 说明
-
-- 这些是第三方作者发布的原始 npm 产物，版权归各自作者，本仓库只做离线镜像，方便重装。
-- **源码不在这个仓库**：自己写的插件源码在各自的仓库里，一个插件一个仓库 —— 目前是 [`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers)。这里只放打包好的 tgz 和打包工具。
-- **自建插件的正式发布在它自己的仓库**：[`dsh-pwbrowser-browsers`](https://github.com/KINGs74/dsh-pwbrowser-browsers) 的 [Release v1.3.0](https://github.com/KINGs74/dsh-pwbrowser-browsers/releases/tag/v1.3.0) 才是正式包；本仓库里那个同名的 `local-pwbrowser-browsers-1.3.0.tgz` 只是**汇总镜像**（方便一次把第三方那几个全下），两边内容一致。
-- **配置不在备份范围**：模型、主题、MCP、浏览器开关这些本机设置，换机器重新设一遍即可；本仓库只保证「插件包装得回来」。
+第三方插件版权归原作者。自建插件源码和正式版本分别维护在 [dsh-pet](https://github.com/KINGs74/dsh-pet) 和 [dsh-pwbrowser-browsers](https://github.com/KINGs74/dsh-pwbrowser-browsers)。本仓库提供可单独安装的副本和备份工具。
